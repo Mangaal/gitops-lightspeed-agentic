@@ -1,0 +1,8 @@
+# No CRD is installed for this GVK. Argo CD cannot fully compare or health-check it,
+# which yields OutOfSync + Unknown on the Application.
+apiVersion: testdata.agentic.io/v1
+kind: UnknownKind
+metadata:
+  name: unknown-workload
+spec:
+  purpose: agentic-trigger-unknown-health-fixture

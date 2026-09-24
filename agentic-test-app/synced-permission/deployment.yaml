@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:  
+  name: synced-permission
+  labels:
+    app: synced-permission
+  template:
+    metadata:
+      labels:
+        app: synced-permission
+    spec:
+      containers:
+        - name: nginx
+          image: quay.io/nginx/nginx-unprivileged:1.27
+          ports:
+            - name: http
+              containerPort: 8080
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            capabilities:
+              drop:
+                - ALL
+          # Container runs, but never becomes ready → Application stays Progressing.
+          readinessProbe:
+            httpGet:
+              path: /never-ready
+              port: http
+            initialDelaySeconds: 1
+            periodSeconds: 5
+            failureThreshold: 1
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
