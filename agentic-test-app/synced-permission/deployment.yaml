@@ -29,7 +29,7 @@ spec:
                 - ALL
           readinessProbe:
             httpGet:
-              path: /never-ready
+              path: /
               port: http
             initialDelaySeconds: 1
             periodSeconds: 5
