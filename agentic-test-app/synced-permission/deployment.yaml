@@ -1,9 +1,15 @@
+
 apiVersion: apps/v1
 kind: Deployment
-metadata:  
+metadata:
   name: synced-permission
   labels:
     app: synced-permission
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: synced-permission
   template:
     metadata:
       labels:
@@ -21,7 +27,6 @@ metadata:
             capabilities:
               drop:
                 - ALL
-          # Container runs, but never becomes ready → Application stays Progressing.
           readinessProbe:
             httpGet:
               path: /never-ready
